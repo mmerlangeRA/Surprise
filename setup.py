@@ -86,6 +86,9 @@ with open(path.join(here, "requirements.txt"), encoding="utf-8") as f:
 cmdclass = {}
 
 def build_extensions():
+
+    packages=find_packages(exclude=["tests*"])
+    print(packages)
     import numpy as np
     ext = ".pyx" if USE_CYTHON else ".c"
 
