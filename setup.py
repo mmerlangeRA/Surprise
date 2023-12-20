@@ -131,7 +131,7 @@ def build_extensions():
     extensions = [
         Extension(
             "surprise.similarities",
-            ["surprise/similarities" + ext],
+            ["surprise/similarities.pyx"],
             include_dirs=[get_numpy_include()],
         ),
         Extension(
