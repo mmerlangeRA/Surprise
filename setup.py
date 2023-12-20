@@ -63,6 +63,13 @@ Then, maybe, celebrate.
 from setuptools import dist  # Install numpy right now
 
 
+def get_numpy_include():
+    try:
+        import numpy
+        return numpy.get_include()
+    except ImportError:
+        return ""
+
 try:
     from Cython.Build import cythonize
     from Cython.Distutils import build_ext
@@ -98,27 +105,27 @@ def build_extensions():
         Extension(
             "surprise.similarities",
             ["surprise/similarities" + ext],
-            include_dirs=[np.get_include()],
+            include_dirs=[get_numpy_include()],
         ),
         Extension(
             "surprise.prediction_algorithms.matrix_factorization",
             ["surprise/prediction_algorithms/matrix_factorization" + ext],
-            include_dirs=[np.get_include()],
+            include_dirs=[get_numpy_include()],
         ),
         Extension(
             "surprise.prediction_algorithms.optimize_baselines",
             ["surprise/prediction_algorithms/optimize_baselines" + ext],
-            include_dirs=[np.get_include()],
+            include_dirs=[get_numpy_include()],
         ),
         Extension(
             "surprise.prediction_algorithms.slope_one",
             ["surprise/prediction_algorithms/slope_one" + ext],
-            include_dirs=[np.get_include()],
+            include_dirs=[get_numpy_include()],
         ),
         Extension(
             "surprise.prediction_algorithms.co_clustering",
             ["surprise/prediction_algorithms/co_clustering" + ext],
-            include_dirs=[np.get_include()],
+            include_dirs=[get_numpy_include()],
         ),
     ]
 
