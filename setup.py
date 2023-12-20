@@ -126,6 +126,7 @@ def build_extensions():
     print("build_extensions")
 
     ext = ".pyx" if USE_CYTHON else ".c"
+    print("ext=",ext)
 
     extensions = [
         Extension(
