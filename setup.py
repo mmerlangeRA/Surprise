@@ -136,6 +136,9 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     version=__version__,
+    install_requires=[
+        'numpy>=1.17.3'
+    ],
     url="https://surpriselib.com",
     license="GPLv3+",
     classifiers=[
