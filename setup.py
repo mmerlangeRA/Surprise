@@ -59,5 +59,9 @@ if USE_CYTHON:
 setup(
     ext_modules=extensions,
     packages=find_packages(exclude=["tests*"]),
+        install_requires=[
+        'numpy',
+        # Add other runtime dependencies as needed
+    ],
     cmdclass=cmdclass,
 )
