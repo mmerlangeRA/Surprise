@@ -87,8 +87,10 @@ cmdclass = {}
 
 def build_extensions():
     print("build_extensions")
-    packages=find_packages(exclude=["tests*"])
-    print(packages)
+    import pkg_resources
+
+    installed_packages = {d.project_name: d.version for d in pkg_resources.working_set}
+    print(installed_packages)
     import numpy as np
     ext = ".pyx" if USE_CYTHON else ".c"
 
