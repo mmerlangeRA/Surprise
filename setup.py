@@ -162,7 +162,6 @@ setup(
     packages=find_packages(exclude=["tests*"]),
     python_requires=">=3.8",
     include_package_data=True,
-    ext_modules=extensions,
     cmdclass=cmdclass,
     install_requires=install_requires,
     entry_points={"console_scripts": ["surprise = surprise.__main__:main"]},
