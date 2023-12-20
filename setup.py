@@ -1,6 +1,6 @@
 from codecs import open
 from os import path
-
+import numpy as np
 from setuptools import Extension, find_packages, setup
 
 """
