@@ -72,26 +72,31 @@ def get_numpy_include():
         print("no nympy")
         return ""
 
-def get_cythonize():
-    print("get_cythonize")
-    import pkg_resources
-    installed_packages = {d.project_name: d.version for d in pkg_resources.working_set}
-    print(installed_packages)
+def get_cythonize(extensions):
     try:
         from Cython.Build import cythonize
-        return cythonize
+        return cythonize(
+            extensions,
+            compiler_directives={
+                "language_level": 3,
+                "boundscheck": False,
+                "wraparound": False,
+                "initializedcheck": False,
+                "nonecheck": False,
+            },
+        )
     except ImportError:
-        print("get_cythonize error")
-        return ""
+        print("Cython is not installed.")
+        return extensions
 
-def get_build_ext():
-    print("get_build_ext")
+def get_build_ext_cmdclass():
     try:
         from Cython.Distutils import build_ext
-        return build_ext
+        return {'build_ext': build_ext}
     except ImportError:
-        print("get_build_ext error")
-        return ""
+        print("Cython is not installed.")
+        return {}
+
 
 """ try:
     from Cython.Build import cythonize
@@ -151,20 +156,12 @@ def build_extensions():
     ]
 
     if USE_CYTHON:
-        # See https://cython.readthedocs.io/en/latest/src/userguide/source_files_and_compilation.html#distributing-cython-modules
-        extensions = get_cythonize()(
-            extensions,
-            compiler_directives={
-                "language_level": 3,
-                "boundscheck": False,
-                "wraparound": False,
-                "initializedcheck": False,
-                "nonecheck": False,
-            },
-        )
-        cmdclass.update({"build_ext": get_build_ext()})
+        extensions = get_cythonize(extensions)
+        global cmdclass
+        cmdclass.update(get_build_ext_cmdclass())
 
     return extensions
+
 
 
 print('install_requires')
