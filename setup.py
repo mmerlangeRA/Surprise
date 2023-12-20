@@ -64,10 +64,18 @@ from setuptools import dist  # Install numpy right now
 
 
 def get_numpy_include():
+    print("get_numpy_include")
     try:
         import numpy
         return numpy.get_include()
     except ImportError:
+        print("get_numpy_include error")
+        print("numpy not installed")
+        print("installing numpy")
+        import pip
+        pip.main(['install', 'numpy'])
+        import numpy
+        return numpy.get_include()
         return ""
 
 try:
