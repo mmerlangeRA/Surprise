@@ -134,7 +134,7 @@ def build_extensions():
     return extensions
 
 
-
+print(install_requires)
 
 setup(
     name="scikit-surprise",
