@@ -134,6 +134,7 @@ def build_extensions():
     return extensions
 
 
+print('install_requires')
 print(install_requires)
 
 setup(
