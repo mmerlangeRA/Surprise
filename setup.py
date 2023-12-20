@@ -99,7 +99,6 @@ else:
     USE_CYTHON = True """
 USE_CYTHON = True
 
-print("USE_CYTHON="+str(USE_CYTHON))
 
 __version__ = "1.1.3"
 
