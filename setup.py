@@ -72,13 +72,34 @@ def get_numpy_include():
         print("no nympy")
         return ""
 
-try:
+def get_cythonize():
+    print("get_cythonize")
+    try:
+        from Cython.Build import cythonize
+        return cythonize
+    except ImportError:
+        print("get_cythonize error")
+        return ""
+
+def get_build_ext():
+    print("get_build_ext")
+    try:
+        from Cython.Distutils import build_ext
+        return build_ext
+    except ImportError:
+        print("get_build_ext error")
+        return ""
+
+""" try:
     from Cython.Build import cythonize
     from Cython.Distutils import build_ext
 except ImportError:
     USE_CYTHON = False
 else:
-    USE_CYTHON = True
+    USE_CYTHON = True """
+USE_CYTHON = True
+
+print("USE_CYTHON="+str(USE_CYTHON))
 
 __version__ = "1.1.3"
 
@@ -96,10 +117,7 @@ cmdclass = {}
 
 def build_extensions():
     print("build_extensions")
-    import pkg_resources
 
-    installed_packages = {d.project_name: d.version for d in pkg_resources.working_set}
-    print(installed_packages)
     ext = ".pyx" if USE_CYTHON else ".c"
 
     extensions = [
@@ -132,7 +150,7 @@ def build_extensions():
 
     if USE_CYTHON:
         # See https://cython.readthedocs.io/en/latest/src/userguide/source_files_and_compilation.html#distributing-cython-modules
-        extensions = cythonize(
+        extensions = get_cythonize()(
             extensions,
             compiler_directives={
                 "language_level": 3,
@@ -142,7 +160,7 @@ def build_extensions():
                 "nonecheck": False,
             },
         )
-        cmdclass.update({"build_ext": build_ext})
+        cmdclass.update({"build_ext": get_build_ext()})
 
     return extensions
 
